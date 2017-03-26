@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "declaration": true
+    },
+    "include": [
+        "../src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "../release/**/*",
+        "typings/browser.d.ts",
+        "typings/browser/**"
+    ]
+}

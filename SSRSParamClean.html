@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+      <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+        <head>
+
+          <title>SSRS Parameter cleanup tool</title>
+          
+          <script src="app.js"></script>
+          <script>
+            function onload()
+            {
+                // sampleInput in app.ts for debugging
+                if (sampleInput.length>0)
+                {
+                    document.getElementById("txtInput").value = sampleInput;
+                }
+            }
+
+          function BtnSubmitClicked() 
+          {
+              // grab the input
+              let input = document.getElementById("txtInput").value;
+
+              // clean input
+              let output = Clean(input);
+              document.getElementById("txtOutput").value = output;
+          }
+
+          function OnCopyClick()
+          {
+              var copyTextArea = document.querySelector(".OutputTextArea");
+              copyTextArea.select();
+
+              try {
+                  var success = document.execCommand('copy');
+                  console.log("Copying output..." + (success?"Done":"Nope!"));
+              } 
+              catch(err)
+              {
+                  console.log("Unable to copy output: " +err);
+              }
+          }
+        </script>
+
+        <style type="text/css">       
+           .InputTextArea, .OutputTextArea
+           {
+               width: 100%;
+           }
+        </style>
+        </head>
+        <body onload="onload()">
+          <div style="width: 500px">
+              <p>
+                  This page will clean output from the SQL Server Reporting Services LogExecution parameters list.
+              </p>
+              <p>
+                Reference: <a href="https://docs.microsoft.com/en-us/sql/reporting-services/report-server/report-server-executionlog-and-the-executionlog3-view">
+                report-server-executionlog-and-the-executionlog3-view</a>
+              </p>
+          </div>
+          <div>
+              <!-- the attributes: autofocus, required are html5 introduced attributes -->
+              <textarea id="txtInput" class="InputTextArea" rows="4" cols="50" autofocus required></textarea>
+              <button type="submit" id="btnSubmit" onclick="BtnSubmitClicked()">Format parameters list</button>
+              <br />
+              <br />
+              <textarea id="txtOutput" class="OutputTextArea" rows="4" cols="50"></textarea>
+              <div>
+                <button id="copyOutputButton" class="CopyOutputButton" onclick="OnCopyClick()">
+                  Copy to clipboard
+                </button>
+              </div>
+          </div>
+        </body>
+        
+      </html>
